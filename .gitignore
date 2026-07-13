@@ -1,0 +1,52 @@
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.sln.docstates
+*.VC.db
+*.VC.opendb
+*.vcxproj.user
+Debug/
+Release/
+x64/
+Win32/
+*.pdb
+*.ilk
+*.lib
+*.exp
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pyz
+venv/
+env/
+*.egg-info/
+dist/
+build/
+*.spec
+
+# DLL output (optional - if you want to track builds)
+# FR2_Mod.dll
+
+# Log files
+*.txt
+!README.md
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Packages
+packages/
+
+# Build artifacts
+*.obj
+*.exe
+!FR2_Injector.exe
