@@ -86,7 +86,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -107,7 +107,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -116,6 +116,7 @@
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>psapi.lib;user32.lib;gdi32.lib</AdditionalDependencies>
       <DelayLoadDLLs>d3d9.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -151,27 +152,39 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Core\Logger\Logger.h" />
-    <ClInclude Include="Features\Coin.h" />
-    <ClInclude Include="Features\Health.h" />
+    <ClInclude Include="src\Core\Logger\Logger.h" />
+    <ClInclude Include="src\Features\Coin.h" />
+    <ClInclude Include="src\Features\Health.h" />
+    <ClInclude Include="src\Features\Damage.h" />
+    <ClInclude Include="src\Features\Wave.h" />
+    <ClInclude Include="src\Features\AutoUpgrade.h" />
+    <ClInclude Include="src\Features\IllegalPlacement.h" />
+    <ClInclude Include="src\Features\BulletHell.h" />
+    <ClInclude Include="src\Memory\MemoryManager.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="SDK\GameState.h" />
-    <ClInclude Include="UI\MenuManager.h" />
+    <ClInclude Include="src\SDK\GameState.h" />
+    <ClInclude Include="src\UI\MenuManager.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Core\Logger\Logger.cpp" />
+    <ClCompile Include="src\Core\Logger\Logger.cpp" />
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="Features\Coin.cpp" />
-    <ClCompile Include="Features\Health.cpp" />
+    <ClCompile Include="src\Features\Coin.cpp" />
+    <ClCompile Include="src\Features\Health.cpp" />
+    <ClCompile Include="src\Features\Damage.cpp" />
+    <ClCompile Include="src\Features\Wave.cpp" />
+    <ClCompile Include="src\Features\AutoUpgrade.cpp" />
+    <ClCompile Include="src\Features\IllegalPlacement.cpp" />
+    <ClCompile Include="src\Features\BulletHell.cpp" />
+    <ClCompile Include="src\Memory\MemoryManager.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="SDK\GameState.cpp" />
-    <ClCompile Include="UI\MenuManager.cpp" />
+    <ClCompile Include="src\SDK\GameState.cpp" />
+    <ClCompile Include="src\UI\MenuManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -2,6 +2,11 @@
 #include "MenuManager.h"
 #include "Features/Coin.h"
 #include "Features/Health.h"
+#include "Features/Damage.h"
+#include "Features/Wave.h"
+#include "Features/AutoUpgrade.h"
+#include "Features/IllegalPlacement.h"
+#include "Features/BulletHell.h"
 #include "Core/Logger/Logger.h"
 
 // Static member definitions
@@ -65,12 +70,75 @@ void MenuManager::Build()
     m_items[m_totalItems].value = 0;
     m_itemLevel[m_totalItems] = 1;
     m_totalItems++;
+
+    // Child of In-Game: Damage Multiplier
+    m_items[m_totalItems].name = Damage::GetStatusText();
+    m_items[m_totalItems].isParent = false;
+    m_items[m_totalItems].parentIndex = 2;
+    m_items[m_totalItems].actionType = 4;
+    m_items[m_totalItems].value = 0;
+    m_itemLevel[m_totalItems] = 1;
+    m_totalItems++;
+
+    // Child of In-Game: Auto Upgrade
+    m_items[m_totalItems].name = "Auto Upgrade (Max L3)";
+    m_items[m_totalItems].isParent = false;
+    m_items[m_totalItems].parentIndex = 2;
+    m_items[m_totalItems].actionType = 7;
+    m_items[m_totalItems].value = 0;
+    m_itemLevel[m_totalItems] = 1;
+    m_totalItems++;
+
+    // Child of In-Game: Illegal Grid Placement
+    m_items[m_totalItems].name = "Illegal Grid Placement";
+    m_items[m_totalItems].isParent = false;
+    m_items[m_totalItems].parentIndex = 2;
+    m_items[m_totalItems].actionType = 8;
+    m_items[m_totalItems].value = 0;
+    m_itemLevel[m_totalItems] = 1;
+    m_totalItems++;
+
+    // Child of In-Game: Bullet Hell 360
+    m_items[m_totalItems].name = "Bullet Hell 360 Barrage";
+    m_items[m_totalItems].isParent = false;
+    m_items[m_totalItems].parentIndex = 2;
+    m_items[m_totalItems].actionType = 10;
+    m_items[m_totalItems].value = 0;
+    m_itemLevel[m_totalItems] = 1;
+    m_totalItems++;
+
+    // === Parent 3: Wave ===
+    int waveParent = m_totalItems;
+    m_items[m_totalItems].name = "Wave";
+    m_items[m_totalItems].isParent = true;
+    m_items[m_totalItems].parentIndex = -1;
+    m_items[m_totalItems].actionType = 0;
+    m_itemLevel[m_totalItems] = 0;
+    m_totalItems++;
+
+    // Child of Wave: Skip Wave
+    m_items[m_totalItems].name = "Skip to Next Wave";
+    m_items[m_totalItems].isParent = false;
+    m_items[m_totalItems].parentIndex = waveParent;
+    m_items[m_totalItems].actionType = 5;
+    m_items[m_totalItems].value = 0;
+    m_itemLevel[m_totalItems] = 1;
+    m_totalItems++;
+
+    // Child of Wave: Instant Selesai
+    m_items[m_totalItems].name = "Instant Selesai (Win)";
+    m_items[m_totalItems].isParent = false;
+    m_items[m_totalItems].parentIndex = waveParent;
+    m_items[m_totalItems].actionType = 6;
+    m_items[m_totalItems].value = 0;
+    m_itemLevel[m_totalItems] = 1;
+    m_totalItems++;
 }
 
 void MenuManager::UpdateVisible()
 {
     m_visibleCount = 0;
-    bool parentExpanded[10] = { false };
+    bool parentExpanded[MAX_ITEMS] = { false };
 
     for (int i = 0; i < m_totalItems; i++) {
         if (m_items[i].parentIndex == -1) {
@@ -128,6 +196,25 @@ void MenuManager::HandleNavigation()
                 }
                 case 3:
                     Health::Toggle();
+                    break;
+                case 4:
+                    Damage::Toggle();
+                    m_items[realIndex].name = Damage::GetStatusText();
+                    break;
+                case 5:
+                    WaveFeature::SkipWave();
+                    break;
+                case 6:
+                    WaveFeature::InstantFinish();
+                    break;
+                case 7:
+                    AutoUpgrade::Toggle();
+                    break;
+                case 8:
+                    IllegalPlacement::Toggle();
+                    break;
+                case 10:
+                    BulletHell::Toggle();
                     break;
                 }
             }

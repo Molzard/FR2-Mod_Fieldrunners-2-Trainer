@@ -6,11 +6,17 @@
 #include <GL/gl.h>
 #include <ctime>
 
-#include "Core/Logger/Logger.h"
-#include "SDK/GameState.h"
-#include "Features/Health.h"
-#include "Features/Coin.h"
-#include "UI/MenuManager.h"
+#include "src/Core/Logger/Logger.h"
+#include "src/SDK/GameState.h"
+#include "src/Features/Health.h"
+#include "src/Features/Coin.h"
+#include "src/Features/Damage.h"
+#include "src/Features/Wave.h"
+#include "src/Features/AutoUpgrade.h"
+#include "src/Features/IllegalPlacement.h"
+#include "src/Features/BulletHell.h"
+#include "src/UI/MenuManager.h"
+#include "src/Memory/MemoryManager.h"
 
 #pragma comment(lib, "psapi.lib")
 #pragma comment(lib, "libMinHook.x86.lib")
@@ -33,6 +39,8 @@ HGLRC g_lastContext = nullptr;
 HDC   g_lastDC = nullptr;
 
 uintptr_t g_moduleBase = 0;
+
+MemoryManager g_Memory;
 
 void BuildFont(HDC hdc)
 {
@@ -208,6 +216,18 @@ void RenderMenuGL()
             sprintf_s(text, "%s: %s", MenuManager::GetItems()[realIndex].name,
                 Health::IsActive() ? "ACTIVE" : "INACTIVE");
         }
+        else if (MenuManager::GetItems()[realIndex].actionType == 7) {
+            sprintf_s(text, "%s: %s", MenuManager::GetItems()[realIndex].name,
+                AutoUpgrade::IsActive() ? "ACTIVE" : "INACTIVE");
+        }
+        else if (MenuManager::GetItems()[realIndex].actionType == 8) {
+            sprintf_s(text, "%s: %s", MenuManager::GetItems()[realIndex].name,
+                IllegalPlacement::IsActive() ? "ACTIVE" : "INACTIVE");
+        }
+        else if (MenuManager::GetItems()[realIndex].actionType == 10) {
+            sprintf_s(text, "%s: %s", MenuManager::GetItems()[realIndex].name,
+                BulletHell::IsActive() ? "ACTIVE" : "INACTIVE");
+        }
         else {
             strcpy_s(text, MenuManager::GetItems()[realIndex].name);
         }
@@ -227,7 +247,13 @@ void RenderMenuGL()
 
         DrawTextGL(itemLeft + 10, itemTop + 5 + fontOffsetY, text, r, g, b, 255);
 
-        if (!MenuManager::GetItems()[realIndex].isParent && MenuManager::GetItems()[realIndex].actionType == 3 && Health::IsActive()) {
+        int action = MenuManager::GetItems()[realIndex].actionType;
+        bool isFeatureActive = (action == 3 && Health::IsActive()) ||
+                               (action == 7 && AutoUpgrade::IsActive()) ||
+                               (action == 8 && IllegalPlacement::IsActive()) ||
+                               (action == 10 && BulletHell::IsActive());
+
+        if (!MenuManager::GetItems()[realIndex].isParent && isFeatureActive) {
             int badgeLeft = itemRight - 75;
             glColor4ub(255, 255, 255, isSelected ? 255 : 180);
             glBegin(GL_LINE_LOOP);
@@ -279,6 +305,10 @@ extern "C" void __cdecl RenderAndLog()
     g_frameCount++;
     GameState::Get().Update();
     MenuManager::HandleNavigation();
+
+    // Fast tick updates for active features
+    AutoUpgrade::Update(g_moduleBase);
+
     if (MenuManager::IsVisible()) RenderMenuGL();
     if (g_frameCount == 1 || g_frameCount % 600 == 0) {
         char log[256];
@@ -328,6 +358,9 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserv
         GameState::Get().Initialize(g_moduleBase);
 
         Coin::Initialize(g_moduleBase);
+        Damage::Initialize(g_moduleBase);
+        WaveFeature::Initialize(g_moduleBase);
+        IllegalPlacement::Initialize(g_moduleBase);
 
         MenuManager::Build();
         Logger::Initialize();
@@ -342,7 +375,7 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserv
         CloseHandle(CreateThread(nullptr, 0, HookThread, nullptr, 0, nullptr));
     }
     else if (ul_reason_for_call == DLL_PROCESS_DETACH) {
-        Logger::Log("[DLL] DETACH"); Health::Shutdown(); Sleep(100);
+        Logger::Log("[DLL] DETACH"); Health::Shutdown(); Damage::Shutdown(); IllegalPlacement::Shutdown(); Sleep(100);
         MH_Uninitialize();
         if (g_fontBase) glDeleteLists(g_fontBase, 128);
         Logger::Shutdown();

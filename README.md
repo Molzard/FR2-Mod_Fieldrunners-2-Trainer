@@ -8,6 +8,11 @@ A modding tool for Fieldrunners 2 that injects a custom DLL to provide in-game o
 - **Add Main Menu Coins** - Add coins to the main menu wallet
 - **Add In-Game Coins** - Add money during gameplay
 - **Freeze Player Health** - Lock player health to max value
+- **Damage Multiplier** - Custom multipliers (OFF, 2x, 5x, 10x, 100x) via native damage hook
+- **Wave Controls** - Skip Wave and Instant Victory trigger via `WaveManager`
+- **Auto Upgrade** - Instantly max-upgrades (Level 3) newly placed or existing towers for free
+- **Illegal Grid Placement** - Bypass tile checks and pathfinding to build anywhere on the map
+- **Bullet Hell 360°** - Radial Danmaku barrage damaging all active creeps on the field
 - **Real-time Game State** - Displays current wave, kills, coins, and HP
 - **Expandable Menu** - Parent-child menu hierarchy with expand/collapse
 - **Persona 5 Themed UI** - Stylized red-black overlay design
@@ -16,25 +21,32 @@ A modding tool for Fieldrunners 2 that injects a custom DLL to provide in-game o
 
 ```text
 FR2_Mod/
-├── Core/
-│ └── Logger/
-│ ├── Logger.h # Logging utility (file-based)
-│ └── Logger.cpp
-├── SDK/
-│ ├── GameState.h # Game state reader (HP, Coins, Wave, etc.)
-│ └── GameState.cpp
-├── Features/
-│ ├── Coin.h # Coin manipulation (Main Menu + In-Game)
-│ ├── Coin.cpp
-│ ├── Health.h # Health freeze feature
-│ └── Health.cpp
-├── UI/
-│ ├── MenuManager.h # Menu structure & navigation logic
-│ └── MenuManager.cpp
-├── hooks.asm # x86 assembly hooks (naked functions)
-├── dllmain.cpp # DLL entry point & OpenGL rendering
-├── FR2_Mod.vcxproj # Visual Studio project file
-└── main.py # Python GUI injector
+├── src/
+│   ├── Core/
+│   │   └── Logger/
+│   │       ├── Logger.h
+│   │       └── Logger.cpp
+│   ├── SDK/
+│   │   ├── GameState.h
+│   │   └── GameState.cpp
+│   ├── Features/
+│   │   ├── Coin.h / Coin.cpp
+│   │   ├── Health.h / Health.cpp
+│   │   ├── Damage.h / Damage.cpp
+│   │   ├── Wave.h / Wave.cpp
+│   │   ├── AutoUpgrade.h / AutoUpgrade.cpp
+│   │   ├── IllegalPlacement.h / IllegalPlacement.cpp
+│   │   └── BulletHell.h / BulletHell.cpp
+│   ├── Memory/
+│   │   ├── MemoryManager.h
+│   │   └── MemoryManager.cpp
+│   └── UI/
+│       ├── MenuManager.h
+│       └── MenuManager.cpp
+├── hooks.asm
+├── dllmain.cpp
+├── FR2_Mod.vcxproj
+└── main.py
 ```
 
 ## How It Works

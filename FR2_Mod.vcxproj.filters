@@ -21,19 +21,40 @@
     <ClInclude Include="pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Core\Logger\Logger.h">
+    <ClInclude Include="src\Core\Logger\Logger.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SDK\GameState.h">
+    <ClInclude Include="src\SDK\GameState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Features\Health.h">
+    <ClInclude Include="src\Features\Health.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Features\Coin.h">
+    <ClInclude Include="src\Features\Coin.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="UI\MenuManager.h">
+    <ClInclude Include="src\Features\Damage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Features\Wave.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Features\AutoUpgrade.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Features\IllegalPlacement.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Features\BlackHole.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Features\BulletHell.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Memory\MemoryManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\UI\MenuManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -44,19 +65,40 @@
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Core\Logger\Logger.cpp">
+    <ClCompile Include="src\Core\Logger\Logger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SDK\GameState.cpp">
+    <ClCompile Include="src\SDK\GameState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Features\Health.cpp">
+    <ClCompile Include="src\Features\Health.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Features\Coin.cpp">
+    <ClCompile Include="src\Features\Coin.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="UI\MenuManager.cpp">
+    <ClCompile Include="src\Features\Damage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Features\Wave.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Features\AutoUpgrade.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Features\IllegalPlacement.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Features\BlackHole.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Features\BulletHell.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Memory\MemoryManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\UI\MenuManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
